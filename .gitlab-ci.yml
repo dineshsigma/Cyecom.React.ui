@@ -1,0 +1,37 @@
+stages:
+    - stage
+    - qa
+    - dev
+
+stage-job:
+    stage: stage     
+    script: 
+        - npm install
+        - npm run build-ci
+        - rsync -a /home/gitlab-runner/builds/AQuRJZyN/0/iiplwork/cyecom.react.ui/build/ iipl@164.52.217.185:/home/iipl/public_html/stage-ui.cyecom.com/
+    only:
+        - stage
+    tags:
+        - main-runner
+        
+qa-job:
+    stage: qa     
+    script: 
+        - npm install
+        - npm run build-ci
+        - rsync -a /home/gitlab-runner/builds/AQuRJZyN/0/iiplwork/cyecom.react.ui/build/ iipl@164.52.217.185:/home/iipl/public_html/qa-ui.cyecom.com/
+    only:
+        - qa
+    tags:
+        - main-runner
+
+dev-job:
+    stage: dev     
+    script: 
+        - npm install
+        - npm run build-ci
+        - rsync -a /home/gitlab-runner/builds/AQuRJZyN/0/iiplwork/cyecom.react.ui/build/ iipl@164.52.217.185:/home/iipl/public_html/dev-ui.cyecom.com/
+    only:
+        - dev
+    tags:
+        - main-runner
